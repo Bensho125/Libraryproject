@@ -37,4 +37,10 @@ public class UserService {
         repo.save(user);
         return new ResponseEntity(user, HttpStatus.OK);
     }
+
+    public User getById(int id) {
+        User user = repo.findById(id).get();
+        user.setPassword("CENSORED");
+        return user;
+    }
 }

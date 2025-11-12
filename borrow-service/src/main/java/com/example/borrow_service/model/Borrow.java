@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 public class Borrow {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -16,18 +17,22 @@ public class Borrow {
     private String userName;
     private int bookId;
     private String bookTitle;
+    private int librarianId;
+    private String librarianName;
     private LocalDate borrowDate;
     private LocalDate returnDate;
 
     public Borrow() {
     }
 
-    public Borrow(int id, int userId, String userName, int bookId, String bookTitle, LocalDate borrowDate, LocalDate returnDate) {
+    public Borrow(int id, int userId, String userName, int bookId, String bookTitle, int librarianId, String librarianName, LocalDate borrowDate, LocalDate returnDate) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
         this.bookId = bookId;
         this.bookTitle = bookTitle;
+        this.librarianId = librarianId;
+        this.librarianName = librarianName;
         this.borrowDate = borrowDate;
         this.returnDate = returnDate;
     }
@@ -88,6 +93,22 @@ public class Borrow {
         this.returnDate = returnDate;
     }
 
+    public int getLibrarianId() {
+        return librarianId;
+    }
+
+    public void setLibrarianId(int librarianId) {
+        this.librarianId = librarianId;
+    }
+
+    public String getLibrarianName() {
+        return librarianName;
+    }
+
+    public void setLibrarianName(String librarianName) {
+        this.librarianName = librarianName;
+    }
+
     @Override
     public String toString() {
         return "Borrow{" +
@@ -96,6 +117,8 @@ public class Borrow {
                 ", userName='" + userName + '\'' +
                 ", bookId=" + bookId +
                 ", bookTitle='" + bookTitle + '\'' +
+                ", librarianId=" + librarianId +
+                ", librarianName='" + librarianName + '\'' +
                 ", borrowDate=" + borrowDate +
                 ", returnDate=" + returnDate +
                 '}';

@@ -44,7 +44,7 @@ public class SecurityConfig {
         http.csrf(customizer -> customizer.disable());
         http.authorizeHttpRequests(
                 request -> request
-                        .requestMatchers("/auth/register", "/auth/login").permitAll()
+                        .requestMatchers("/auth/register", "/auth/login", "/auth/getById/*").permitAll()
                         .anyRequest()
                         .authenticated()
         );
