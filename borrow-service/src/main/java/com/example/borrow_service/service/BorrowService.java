@@ -7,6 +7,7 @@ import com.example.borrow_service.model.Book;
 import com.example.borrow_service.model.Borrow;
 import com.example.borrow_service.model.BorrowRequest;
 import com.example.borrow_service.model.User;
+import com.example.borrow_service.repo.ArchiveRepo;
 import com.example.borrow_service.repo.BorrowRepo;
 import feign.FeignException;
 import jakarta.transaction.Transactional;
@@ -24,10 +25,14 @@ public class BorrowService {
     BorrowRepo repo;
 
     @Autowired
+    ArchiveRepo archiveRepo;
+
+    @Autowired
     BookInterface bookInterface;
 
     @Autowired
     UserInterface userInterface;
+
 
     public List<Borrow> getAllBorrows() {
         return repo.findAll();
@@ -108,6 +113,7 @@ public class BorrowService {
         }
 
         if(date.isAfter(borrow.getReturnDate())){
+            archiveRepo.save(borrow);
             repo.delete(borrow);
             long dayDiff = date.toEpochDay() - borrow.getReturnDate().toEpochDay();
             return ResponseEntity.ok().body("YOU ARE LATE BY " + dayDiff + " DAYS!!!");
@@ -116,6 +122,7 @@ public class BorrowService {
             return ResponseEntity.badRequest().body("are you a time traveler?");
         }
 
+        archiveRepo.save(borrow);
         repo.delete(borrow);
 
         return ResponseEntity.ok().body("book returned");
